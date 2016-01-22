@@ -10,7 +10,7 @@ The web application is written using Go, its sources are inside of simple_web/we
 ### Requirements
 
 * Docker daemon running.
-* Official SLE12 and SLE11SP3 Docker images installed.
+* Official SUSE Linux Enterprise Docker images installed.
 * The Go compiler
 * make
 
