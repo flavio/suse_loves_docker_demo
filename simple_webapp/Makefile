@@ -1,23 +1,28 @@
-all :: sles12 sles11sp3
-	echo 'DONE'
+all :: sles11sp3 sles11sp4 sles12 sles12sp1
+	@echo 'DONE'
 
 webapp ::
-	cd webapp_demo && go build
+	cd webapp_demo; make
 
 sles12 :: webapp
-	ln -f webapp_demo/webapp_demo demo-sles12/webapp_demo
-	cp -r webapp_demo/web demo-sles12/web
-	docker build -t sles12_webapp demo-sles12
+	@echo Building SLE12 demo image
+	echo docker build -f Dockerfile-sles12 -t sles12_webapp .
+
+sles12sp1 :: webapp
+	@echo Building SLE12SP1 demo image
+	docker build -f Dockerfile-sles12sp1 -t sles12sp1_webapp .
 
 sles11sp3 :: webapp
-	ln -f webapp_demo/webapp_demo demo-sles11sp3/webapp_demo
-	cp -r webapp_demo/web demo-sles11sp3/web
-	docker build -t sles11sp3_webapp demo-sles11sp3
+	@echo Building SLE11SP3 demo image
+	docker build -f Dockerfile-sles11sp3 -t sles11sp3_webapp .
+
+sles11sp4 :: webapp
+	@echo Building SLE11SP4 demo image
+	docker build -f Dockerfile-sles11sp4 -t sles11sp4_webapp .
 
 clean ::
-	rm -rf demo-sles11sp3/web
-	rm -rf demo-sles11sp3/webapp_demo
-	rm -rf demo-sles12/web
-	rm -rf demo-sles12/webapp_demo
+	rm webapp_demo/webapp_demo
 	docker rmi sles11sp3_webapp
+	docker rmi sles11sp4_webapp
 	docker rmi sles12_webapp
+	docker rmi sles12sp1_webapp

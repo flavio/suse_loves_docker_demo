@@ -1,4 +1,4 @@
-FROM suse/sles12:latest
+FROM suse/sles11sp4:latest
 MAINTAINER Flavio Castelli <fcastelli@suse.com>
 
 # Create a new demo_user.
@@ -6,8 +6,8 @@ RUN /usr/sbin/useradd -m demo_user
 
 # Add our demo application inside of the /demo/ directory, the app is going
 # to be renamed from webapp_demo to webapp.
-ADD webapp_demo /demo/webapp
-ADD web /demo/web
+ADD webapp_demo/webapp_demo /demo/webapp
+ADD webapp_demo/web /demo/web
 
 WORKDIR /demo
 
