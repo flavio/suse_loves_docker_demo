@@ -20,10 +20,12 @@
   <body>
     <div id='content'>
       <h1><span class="blue">Docker</span> + <span class="suse">SUSE Linux Enterprise</span> = <span class="red">&#9829;</span></h1>
-      <p>The container OS is:</p>
-      {{range .Data}}
+      <h2>Container OS</h2>
+      {{range .OsData}}
         <p><span class="suse"><strong>{{.}}</strong></span></p>
       {{end}}
+      <h2>Container ID</h2>
+      <p><span class="suse"><strong>{{.Hostname}}</strong></span></p>
     </div>
   </body>
 </html>

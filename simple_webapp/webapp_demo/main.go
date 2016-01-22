@@ -8,7 +8,8 @@ import "net/http"
 import "strings"
 
 type Details struct {
-	Data []string
+	OsData   []string
+	Hostname string
 }
 
 func main() {
@@ -22,7 +23,9 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	details := Details{Data: detectSleRelease()}
+	details := Details{
+		OsData:   detectSleRelease(),
+		Hostname: detectHostname()}
 	err = t.Execute(w, details)
 	if err != nil {
 		log.Fatal(err)
@@ -41,4 +44,16 @@ func detectSleRelease() []string {
 		}
 	}
 	return lines
+}
+
+func detectHostname() string {
+	content, err := ioutil.ReadFile("/etc/hostname")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if len(content) == 0 {
+		log.Fatal("/etc/hostname is empty")
+	}
+
+	return strings.Trim(string(content), "\n")
 }
